@@ -44,13 +44,26 @@ router.post('/quizzes', [auth, [
     const { question, options, rightAnswer, startDate, endDate } = req.body;
     // Create a new quiz document with the extracted fields
     // console.log(options);
+    let status='';
+    const currentDate = new Date();
 
+    if (currentDate < quiz.startDate) {
+      // Quiz is inactive
+      status = 'inactive';
+    } else if (currentDate >= quiz.startDate && currentDate <= quiz.endDate) {
+      // Quiz is active
+      status = 'active';
+    } else if (currentDate > quiz.endDate) {
+      // Quiz is finished
+      status = 'finished';
+    }
     const quiz = new Quiz({
       question,
       options,
       rightAnswer,
       startDate,
-      endDate
+      endDate,
+      status
     });
     // Save the new quiz document to the database
 

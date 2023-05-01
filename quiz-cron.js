@@ -2,6 +2,7 @@ const cron = require('cron');
 const Quiz = require('./models/quiz');
 
 // Create a new cron job that runs every minute
+// runs in every 60minutes to update status of quiz
 const quizCronJob = new cron.CronJob('0 */1 * * *', async () => {
   try {
     // Get all quizzes from the database
