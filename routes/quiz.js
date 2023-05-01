@@ -47,13 +47,13 @@ router.post('/quizzes', [auth, [
     let status='';
     const currentDate = new Date();
 
-    if (currentDate < quiz.startDate) {
+    if (currentDate < startDate) {
       // Quiz is inactive
       status = 'inactive';
-    } else if (currentDate >= quiz.startDate && currentDate <= quiz.endDate) {
+    } else if (currentDate >= startDate && currentDate <= endDate) {
       // Quiz is active
       status = 'active';
-    } else if (currentDate > quiz.endDate) {
+    } else if (currentDate > endDate) {
       // Quiz is finished
       status = 'finished';
     }
