@@ -5,16 +5,20 @@ const userRouter = require('./routes/users');
 const quizRouter = require('./routes/quiz');
 const app = express();
 const PORT = process.env.PORT || 3000;
+const rateLimit = require('express-rate-limit');
 require('./quiz-cron');
 
 require('dotenv').config();
 const User = require('./models/users');
-
+const limiter = rateLimit({
+    windowMs: 60 * 1000, // 1 minute
+    max: 100, // limit each IP to 100 requests per windowMs
+  });
 connectDB();
 
 // Use middleware
 app.use(express.json());
-
+app.use(limiter);
 
 app.use('/api', authRouter);
 app.use('/api',userRouter);
